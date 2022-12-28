@@ -38,7 +38,7 @@ jobs:
         id: testcode
         run: | 
          npm run test
-         echo ${{ steps.testcode.outcome }} 'output-file1={}' >> $GITHUB_OUTPUT ';'
+         steps.testcode.outcome  'output-file1={}' >> $GITHUB_OUTPUT ';'
          echo ${{ steps.testcode.outcome }}
       - name: Upload test report
         if: failure() && steps.testcode.outcome == 'failure'
