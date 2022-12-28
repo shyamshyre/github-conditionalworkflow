@@ -22,7 +22,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     outputs:
-      script-file:  ${{ steps.testcode.outputs.output-file }}
+      script-file1:  ${{ steps.testcode.outputs.output-file1 }}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -38,7 +38,7 @@ jobs:
         id: testcode
         run: | 
          run test
-         run: echo ${{ steps.testcode.outcome }} 'output-file={}' >> $GITHUB_OUTPUT ';'
+         run: echo ${{ steps.testcode.outcome }} 'output-file1={}' >> $GITHUB_OUTPUT ';'
          run: echo ${{ steps.testcode.outcome }}
       - name: Upload test report
         if: failure() && steps.testcode.outcome == 'failure'
@@ -90,6 +90,6 @@ jobs:
       - name: "Generate Report"
         run: | 
           echo " Generating Report"
-          echo ${{ needs.test.outputs.script-file }}
+          echo ${{ needs.test.outputs.script-file1 }}
           echo ${{ job.test.testcode.outcome }}
 
