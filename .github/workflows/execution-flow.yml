@@ -38,8 +38,9 @@ jobs:
         id: testcode
         run: | 
          npm run test
-         echo steps.testcode.outcome  'output-file1={}' >> $GITHUB_OUTPUT ';'
-         echo ${{ steps.testcode.outcome }}
+        if: steps.testcode.outcome ! = 'failure'
+         echo 'success' 'output-file1={}' >> $GITHUB_OUTPUT ';'
+         
       - name: Upload test report
         if: failure() && steps.testcode.outcome == 'failure'
         uses: actions/upload-artifact@v3
