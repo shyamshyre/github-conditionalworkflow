@@ -36,11 +36,10 @@ jobs:
         run: npm ci
       - name: Test code
         id: testcode
-        run: | 
-         npm run test
+        run: npm run test
+      - name: writeoutput status
         if: steps.testcode.outcome == 'failure'
-         echo 'success' 'output-file1={}' >> $GITHUB_OUTPUT ';'
-         
+            echo 'success' 'output-file1={}' >> $GITHUB_OUTPUT ';'
       - name: Upload test report
         if: failure() && steps.testcode.outcome == 'failure'
         uses: actions/upload-artifact@v3
