@@ -38,7 +38,7 @@ jobs:
         id: testcode
         run: | 
          npm run test
-        if: steps.testcode.outcome ! = 'failure'
+        if: steps.testcode.outcome == 'failure'
          echo 'success' 'output-file1={}' >> $GITHUB_OUTPUT ';'
          
       - name: Upload test report
