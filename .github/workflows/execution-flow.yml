@@ -39,7 +39,7 @@ jobs:
         run: | 
          run test
          run: echo ${{ steps.testcode.outcome }} 'output-file={}' >> $GITHUB_OUTPUT ';'
-         run: echo ${{steps.testcode.outcome}}
+         run: echo ${{ steps.testcode.outcome }}
       - name: Upload test report
         if: failure() && steps.testcode.outcome == 'failure'
         uses: actions/upload-artifact@v3
