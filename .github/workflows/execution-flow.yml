@@ -22,7 +22,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     outputs:
-      script-file:  ${{steps.publish.outputs.output-file}}
+      script-file:  ${{steps.testcode.outputs.output-file}}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -80,8 +80,8 @@ jobs:
       - name: Deploy
         run: echo "Deploying..."
   report:
-    if: failure() && ${{needs.test.outputs.script-file == 'failure'}}
     needs: test
+    if: failure() && ${{needs.test.outputs.script-file == 'failure'}}
     # the below will execute if any of the above jobs failure.
     runs-on: ubuntu-latest
     steps:
