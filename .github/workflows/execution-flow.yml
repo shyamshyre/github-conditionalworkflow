@@ -91,6 +91,6 @@ jobs:
       - name: "Generate Report"
         run: | 
           echo " Generating Report"
-          echo " Using dependency " + ${{ needs.test.outputs.output-file }}
-          echo " Without  dependency" + "${{ job.test.outputs.testcode.outcome }}
+          echo " Using dependency " + ${{ needs.test.outputs.output-file }} + ";"
+          echo " Without  dependency" + "${{ job.test.outputs.testcode.outcome }} + ";"
 
