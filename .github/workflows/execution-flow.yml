@@ -89,6 +89,6 @@ jobs:
       - name: "Generate Report"
         run: | 
           echo " Generating Report"
-          echo needs.test.outputs.script-file
-          echo job.test.testcode.outcome
+          echo ${{ needs.test.outputs.script-file }}
+          echo ${{ job.test.testcode.outcome }}
 
