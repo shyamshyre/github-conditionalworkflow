@@ -82,7 +82,7 @@ jobs:
   report:
     needs: [test]
     # the below will execute if any of the above jobs failure.
-    if: failure() && ${{needs.build.outputs.script-file == 'failure'}}
+    if: failure() && ${{needs.test.outputs.script-file == 'failure'}}
     runs-on: ubuntu-latest
     steps:
       - name: "Generate Report"
