@@ -81,7 +81,8 @@ jobs:
         run: echo "Deploying..."
   report:
     needs: test
-    if: failure() && needs.test.outputs.script-file == 'failure'
+    if : failure()
+    # if: failure() && ${{ needs.test.outputs.script-file == 'failure' }}
     # the below will execute if any of the above jobs failure.
     runs-on: ubuntu-latest
     steps:
