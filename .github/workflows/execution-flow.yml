@@ -38,7 +38,7 @@ jobs:
         id: testcode
         run: | 
          run test
-         run: echo steps.testcode.outcome 'output-file={}' >> $GITHUB_OUTPUT ';'
+         run: echo ${{ steps.testcode.outcome }} 'output-file={}' >> $GITHUB_OUTPUT ';'
          run: echo ${{steps.testcode.outcome}}
       - name: Upload test report
         if: failure() && steps.testcode.outcome == 'failure'
