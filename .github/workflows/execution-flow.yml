@@ -78,7 +78,7 @@ jobs:
   report:
     # needs: [lint,deploy]
     # the below will execute if any of the above jobs failure.
-    if: failure() && jobs.test.steps.testcode.outcome == 'failure'
+    if: failure() && jobs.build.steps.testcode.outcome == 'failure'
     runs-on: ubuntu-latest
     steps:
       - name: "Generate Report"
