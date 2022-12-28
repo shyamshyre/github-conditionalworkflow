@@ -85,4 +85,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Generate Report"
-        run: echo " Generating Report"
+        run: | 
+         echo " Generating Report"
+         echo needs.test.outputs.script-file
+         echo job.test.testcode.outcome
+
