@@ -21,6 +21,8 @@ jobs:
         run: npm run lint
   test:
     runs-on: ubuntu-latest
+    outputs:
+      script-file:  ${{steps.publish.outputs.output-file}}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -34,7 +36,9 @@ jobs:
         run: npm ci
       - name: Test code
         id: testcode
-        run: npm run test
+        run: | 
+         run test
+         run: steps.testcode.outcome 'output-file={}' >> $GITHUB_OUTPUT ';'
       - name: Upload test report
         if: failure() && steps.testcode.outcome == 'failure'
         uses: actions/upload-artifact@v3
@@ -76,9 +80,9 @@ jobs:
       - name: Deploy
         run: echo "Deploying..."
   report:
-    # needs: [lint,deploy]
+    needs: [test]
     # the below will execute if any of the above jobs failure.
-    if: failure() && ${{jobs.test.steps.testcode.outcome == 'failure'}}
+    if: failure() && ${{needs.build.outputs.script-file == 'failure'}}
     runs-on: ubuntu-latest
     steps:
       - name: "Generate Report"
