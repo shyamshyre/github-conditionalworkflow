@@ -80,13 +80,14 @@ jobs:
       - name: Deploy
         run: echo "Deploying..."
   report:
+    needs: test
     # the below will execute if any of the above jobs failure.
     if: failure() && ${{needs.test.outputs.script-file == 'failure'}}
     runs-on: ubuntu-latest
     steps:
       - name: "Generate Report"
         run: | 
-         run echo " Generating Report"
-         run echo needs.test.outputs.script-file
-         run echo job.test.testcode.outcome
+          echo " Generating Report"
+          echo needs.test.outputs.script-file
+          echo job.test.testcode.outcome
 
