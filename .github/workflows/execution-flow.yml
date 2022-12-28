@@ -86,7 +86,7 @@ jobs:
     steps:
       - name: "Generate Report"
         run: | 
-         echo " Generating Report"
-         echo needs.test.outputs.script-file
-         echo job.test.testcode.outcome
+         run echo " Generating Report"
+         run echo needs.test.outputs.script-file
+         run echo job.test.testcode.outcome
 
