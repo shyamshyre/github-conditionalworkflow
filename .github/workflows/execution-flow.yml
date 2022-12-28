@@ -30,17 +30,21 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          # path: ~/.npm
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit ! = 'true'
         run: npm ci
-      
       - name: Test code
         id: testcode
         run: npm run test
       - name: Write Status to File
         id: writestatus  
         #if: ${{ steps.testcode.outcome == 'success'}}
+        # there should be no spaces below while you are assiging 
+        # Important Note : Output to the below variable will be only written , if there is success all over the job.
+        # Even any of the steps are skipped the output isn't writternt to the expected variable.
         run: echo "test=${{steps.testcode.outcome}}" >> $GITHUB_OUTPUT 
       - name: Upload test report
         # if: failure() && steps.testcode.outcome == 'failure'
@@ -58,9 +62,10 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit ! = 'true'
         run: npm ci
       - name: Build website
         id: build-website
