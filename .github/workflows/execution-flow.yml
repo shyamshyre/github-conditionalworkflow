@@ -43,7 +43,7 @@ jobs:
         #if: ${{ steps.testcode.outcome == 'success'}}
         run: echo "test = success" >> $GITHUB_OUTPUT 
       - name: Upload test report
-        if: failure() && steps.testcode.outcome == 'failure'
+        # if: failure() && steps.testcode.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
