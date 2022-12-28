@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Test code
-        id: test-code
+        id: testcode
         run: npm run test
       - name: Upload test report
         if: failure() && steps.testcode.outcome == 'failure'
