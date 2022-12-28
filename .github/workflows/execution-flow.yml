@@ -84,8 +84,7 @@ jobs:
         run: echo "Deploying..."
   report:
     needs: test
-    # if : failure()
-    # if: failure() && ${{ needs.test.outputs.script-file == 'failure' }}
+    if: failure() && ${{ needs.test.outputs.script-file == 'failure' }}
     # the below will execute if any of the above jobs failure.
     runs-on: ubuntu-latest
     steps:
@@ -93,5 +92,5 @@ jobs:
         run: | 
           echo " Generating Report"
           echo ${{ needs.test.outputs.output-file }}
-          echo ${{ job.test.testcode.outcome }}
+          echo ${{ job.test.outputs.testcode.outcome }}
 
