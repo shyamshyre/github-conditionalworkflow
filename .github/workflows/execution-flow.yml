@@ -22,7 +22,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     outputs:
-      script-file1:  ${{ steps.testcode.outputs.test }}
+      script-file1:  ${{ steps.writestatus.outputs.test }}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -39,6 +39,7 @@ jobs:
         id: testcode
         run: npm run test
       - name: Write Status to File
+        id: writestatus  
         if: ${{ steps.testcode.outcome == 'success'}}
         run: echo "test = success" >> $GITHUB_OUTPUT 
       - name: Upload test report
