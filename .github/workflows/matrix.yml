@@ -4,8 +4,8 @@ jobs:
    build:
     strategy: 
       matrix:
-        node-version: [12,13,14]
-        os: [ubuntu-latest, windows]
+        node-version: [12,14,16]
+        os: [ubuntu-latest, windows-latest]
     runs-on: ${{matrix.os}}
     steps:
     - name: checkout the code
