@@ -39,7 +39,7 @@ jobs:
         run: npm ci
       - name: Test code
         id: testcode
-        # continue-on-error: true
+        continue-on-error: true
         run: npm run test
       - name: Write Status to File
         id: writestatus  
