@@ -40,7 +40,9 @@ jobs:
       - name: Test code
         id: testcode
         # continue-on-error: true
-        run: npm run test
+        run: | 
+         npm run test
+         echo "test=${{steps.testcode.outcome}}" >> $GITHUB_OUTPUT 
       - name: Write Status to File
         id: writestatus  
         #if: ${{ steps.testcode.outcome == 'success'}}
