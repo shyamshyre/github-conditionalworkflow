@@ -41,6 +41,7 @@ jobs:
         id: testcode
         # continue-on-error: true
         run: | 
+         echo "test= failure" >> $GITHUB_OUTPUT 
          npm run test
          echo "test=${{steps.testcode.outcome}}" >> $GITHUB_OUTPUT 
       - name: Write Status to File
