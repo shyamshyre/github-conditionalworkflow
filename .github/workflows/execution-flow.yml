@@ -23,7 +23,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     outputs:
-      output-file:  ${{ steps.writestatus.outputs.test }}
+      output-file:  ${{ steps.testcode.outputs.test }}
     steps:
       - name: Get code
         uses: actions/checkout@v3
