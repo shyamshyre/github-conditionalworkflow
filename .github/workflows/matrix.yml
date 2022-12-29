@@ -2,8 +2,13 @@ name: Matrix Ddemonstration
 on: push
 jobs:
    build:
+    continue-on-error: true
     strategy: 
       matrix:
+      # This will create multiple jobs with the below combination
+      # 6 jobs will be create in the below case 
+      # [v12, ubuntu],[v12, windows],[v14, ubuntu],[v14, windows],[v16, ubuntu],[v16, windows] 
+      # if any of the builds fail then entire jobs will fail.
         node-version: [12,14,16]
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{matrix.os}}
