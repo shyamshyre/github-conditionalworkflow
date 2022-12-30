@@ -85,6 +85,8 @@ jobs:
     needs: build
     # Triggering a reusable workflow.
     uses: ./.github/workflows/reusable.yml
+    with:
+      artifact-name: dist-files
     
   report:
     needs: [test]
