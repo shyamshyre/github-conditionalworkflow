@@ -17,7 +17,7 @@ jobs:
             operating-system: ubuntu-latest
       # Exclude will omiit the following version to be executed from the above matrix.
         exclude:
-          - node node-version: 12
+          - node-version: 12
             operating-system: windows-latest   
     runs-on: ${{matrix.os}}
     steps:
