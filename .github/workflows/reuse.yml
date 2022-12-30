@@ -1,0 +1,101 @@
+name: Using Reusable Workflow
+on:
+  push:
+    branches:
+      - main
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Lint code
+        run: npm run lint
+  test:
+    runs-on: ubuntu-latest
+    outputs:
+      output-file:  ${{ steps.testcode.outputs.test }}
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          # path: ~/.npm
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Test code
+        id: testcode
+        # continue-on-error: true
+        run: | 
+         echo "test= failure" >> $GITHUB_OUTPUT 
+         npm run test
+         echo "test=${{steps.testcode.outcome}}" >> $GITHUB_OUTPUT 
+      - name: Write Status to File
+        id: writestatus  
+        #if: ${{ steps.testcode.outcome == 'success'}}
+        # there should be no spaces below while you are assiging 
+        # Important Note : Output to the below variable will be only written , if there is success all over the job.
+        # Even any of the steps are skipped the output isn't writternt to the expected variable.
+        run: echo "test=${{steps.testcode.outcome}}" >> $GITHUB_OUTPUT 
+      - name: Upload test report
+        # if: failure() && steps.testcode.outcome == 'failure'
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test.json
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Build website
+        id: build-website
+        run: npm run build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: dist
+
+  deploy:
+    needs: build
+    # Triggering a reusable workflow.
+    uses: ./.github/workflows/reusable.yml
+    
+  report:
+    needs: [test]
+    if: failure() && ${{ needs.test.outputs.script-file == 'failure' }}
+    # if: failure() 
+    # the below will execute if any of the above jobs failure.
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Generate Report"
+        run: | 
+          echo " Generating Report"
+          echo " Using dependency " ${{ needs.test.outputs.output-file }} 
+          echo " Without  dependency"  ${{ job.test.outputs.testcode.outcome }} 
+
