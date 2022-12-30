@@ -1,4 +1,4 @@
-name: Matrix Ddemonstration
+name: Matrix Demonstration
 on: push
 jobs:
    build:
