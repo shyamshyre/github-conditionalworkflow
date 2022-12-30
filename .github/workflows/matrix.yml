@@ -11,6 +11,14 @@ jobs:
       # if any of the builds fail then entire jobs will fail.
         node-version: [12,14,16]
         os: [ubuntu-latest, windows-latest]
+      # Include will only let the below configured version to execute apart from the above matrix.
+        include:
+          - node-version: 18
+            operating-system: ubuntu-latest
+      # Exclude will omiit the following version to be executed from the above matrix.
+        exclude:
+          - node node-version: 12
+            operating-system: windows-latest   
     runs-on: ${{matrix.os}}
     steps:
     - name: checkout the code
